@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:guardiannews/di/di.dart';
 import 'package:guardiannews/domain/model/news.dart';
+import 'package:guardiannews/store/news.dart';
 
 class NewsListPage extends StatefulWidget {
   @override
@@ -7,7 +9,13 @@ class NewsListPage extends StatefulWidget {
 }
 
 class _NewsListPageState extends State<NewsListPage> {
-  final List<News> _items = List<News>();
+  final NewsStore store = getIt<NewsStore>();
+
+  @override
+  void initState() {
+    store.fetchItems();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +25,10 @@ class _NewsListPageState extends State<NewsListPage> {
         child: ListView.builder(
           itemBuilder: (context, index) {
             return NewsListItem(
-              item: _items[index],
+              item: store.items[index],
             );
           },
-          itemCount: _items.length,
+          itemCount: store.items.length,
         ),
       ),
     );

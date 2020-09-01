@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:guardiannews/data/response/basecollection.dart';
 import 'package:guardiannews/data/response/newsitem.dart';
+import 'package:injectable/injectable.dart';
 
+@Singleton()
 class NewsApi {
   final Dio _dio;
 

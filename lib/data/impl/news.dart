@@ -1,8 +1,10 @@
 import 'package:guardiannews/data/api/news.dart';
 import 'package:guardiannews/domain/model/news.dart';
 import 'package:guardiannews/domain/repo/news.dart';
+import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
+@Injectable(as: NewsRepository)
 class NewsRepositoryImpl implements NewsRepository {
   final NewsApi _api;
 

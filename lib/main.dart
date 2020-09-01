@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:guardiannews/di/di.dart';
 
 import 'ui/detail.dart';
 
 void main() {
+  configureInjection();
   runApp(MyApp());
 }
 
