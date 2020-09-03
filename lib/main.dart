@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Guardian News',
+      color: Colors.white,
       home: NewsListPage(),
     );
   }

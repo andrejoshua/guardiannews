@@ -1,5 +1,5 @@
 import 'package:guardiannews/domain/model/news.dart';
 
-abstract class NewsRepository {
+mixin NewsRepository {
   Future<List<News>> getNews({int page = 1, int offset = 20});
 }
