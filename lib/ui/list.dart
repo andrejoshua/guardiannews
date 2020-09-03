@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:guardiannews/di/di.dart';
 import 'package:guardiannews/domain/model/news.dart';
 import 'package:guardiannews/store/news.dart';
@@ -19,16 +20,22 @@ class _NewsListPageState extends State<NewsListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final cities = store.items;
+
     // TODO: implement build
     return Scaffold(
       body: SafeArea(
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return NewsListItem(
-              item: store.items[index],
+        child: Observer(
+          builder: (_) {
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                return NewsListItem(
+                  item: cities[index],
+                );
+              },
+              itemCount: cities.length,
             );
           },
-          itemCount: store.items.length,
         ),
       ),
     );
@@ -42,35 +49,50 @@ class NewsListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(
-                  bottom: 4.0,
+    return Observer(
+      builder: (_) {
+        return Expanded(
+          child: InkWell(
+            // onTap: () {
+            //   Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => NewsDetailPage(
+            //           url: this.item.url,
+            //         ),
+            //       ));
+            // },
+            child: Container(
+              color: Colors.grey,
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(
+                        bottom: 4.0,
+                      ),
+                      child: Text(item.headline),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        bottom: 8.0,
+                      ),
+                      child: Text(item.section),
+                    ),
+                    Container(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(item.headline),
+                      ),
+                    )
+                  ],
                 ),
-                child: Text(item.headline),
               ),
-              Container(
-                margin: EdgeInsets.only(
-                  bottom: 8.0,
-                ),
-                child: Text(item.section),
-              ),
-              Container(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(item.headline),
-                ),
-              )
-            ],
+            ),
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 }

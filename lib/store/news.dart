@@ -13,22 +13,14 @@ abstract class _NewsStore with Store {
 
   _NewsStore(this._repository);
 
-  static ObservableFuture<List<News>> emptyItems = ObservableFuture.value(null);
-
   @observable
-  ObservableFuture<List<News>> fetchItemsFuture =
-      ObservableFuture<List<News>>(emptyItems);
-
-  @observable
-  List<News> items;
+  ObservableList<News> items = ObservableList();
 
   @action
-  Future fetchItems() async {
-    final future = _repository.getNews();
-    fetchItemsFuture = ObservableFuture(future);
-
-    future.then((value) {
-      this.items = value;
+  Future<void> fetchItems() async {
+    _repository.getNews().then((value) {
+      items.clear();
+      items.addAll(value);
     });
   }
 }

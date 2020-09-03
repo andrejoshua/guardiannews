@@ -26,10 +26,12 @@ class BaseCollectionResponse<T> {
 
   /// Decodes [json] by "inspecting" its contents.
   static T _dataFromJson<T>(Object json) {
-    if (json is Map<String, dynamic>) {
-      // TODO cari tahu
-      if (T is NewsItemResponse) {
-        return NewsItemResponse.fromJson(json) as T;
+    if (json is List) {
+      // TODO no reflection? lol
+      if (T.toString() == "List<NewsItemResponse>") {
+        return json
+            .map((e) => NewsItemResponse.fromJson(e as Map<String, dynamic>))
+            .toList() as T;
       }
     }
 
