@@ -28,7 +28,7 @@ class BaseCollectionResponse<T> {
   static T _dataFromJson<T>(Object json) {
     if (json is List) {
       // TODO no reflection? lol
-      if (T.toString() == "List<NewsItemResponse>") {
+      if (T.runtimeType == (List<NewsItemResponse>()).runtimeType) {
         return json
             .map((e) => NewsItemResponse.fromJson(e as Map<String, dynamic>))
             .toList() as T;

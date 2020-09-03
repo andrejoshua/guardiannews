@@ -28,7 +28,7 @@ class BaseResponse<T> {
   static T _dataFromJson<T>(Object json) {
     if (json is Map<String, dynamic>) {
       // TODO cari tahu
-      if (T is NewsItemResponse) {
+      if (T.runtimeType == (NewsItemResponse).runtimeType) {
         return NewsItemResponse.fromJson(json) as T;
       }
     }

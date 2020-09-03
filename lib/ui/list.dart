@@ -51,74 +51,62 @@ class NewsListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flex(
-      direction: Axis.horizontal,
-      children: [
-        Expanded(
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NewsDetailPage(
-                      url: this.item.url,
-                    ),
-                  ));
-            },
-            child: Container(
-              color: Colors.grey,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(
-                        bottom: 4.0,
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          item.headline,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(
-                        bottom: 8.0,
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          item.section,
-                          style: TextStyle(
-                            fontSize: 12.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          item.publicationDateString,
-                          style: TextStyle(
-                            fontSize: 10.0,
-                            color: Colors.grey[700],
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NewsDetailPage(
+                url: this.item.url,
+              ),
+            ));
+      },
+      child: Container(
+        color: Colors.grey,
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(
+                  bottom: 4.0,
+                ),
+                child: Text(
+                  item.headline,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
                 ),
               ),
-            ),
+              Container(
+                margin: EdgeInsets.only(
+                  bottom: 8.0,
+                ),
+                child: Text(
+                  item.section,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                  ),
+                ),
+              ),
+              Container(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    item.publicationDateString,
+                    style: TextStyle(
+                      fontSize: 10.0,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 }
