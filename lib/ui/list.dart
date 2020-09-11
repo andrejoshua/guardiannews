@@ -1,10 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:guardiannews/di/di.dart';
 import 'package:guardiannews/domain/model/news.dart';
 import 'package:guardiannews/store/news.dart';
-
-import 'detail.dart';
+import 'package:guardiannews/ui/routes.gr.dart';
 
 class NewsListPage extends StatefulWidget {
   @override
@@ -53,12 +53,9 @@ class NewsListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => NewsDetailPage(
-                url: this.item.url,
-              ),
+        ExtendedNavigator.of(context).push(Routes.toNewsDetail,
+            arguments: NewsDetailPageArguments(
+              url: item.url,
             ));
       },
       child: Container(

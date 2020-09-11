@@ -27,12 +27,13 @@ GetIt $initGetIt(
   EnvironmentFilter environmentFilter,
 }) {
   final gh = GetItHelper(get, environment, environmentFilter);
-  gh.lazySingleton<Requirements>(() => DevRequirements(), registerFor: {_dev});
-  gh.lazySingleton<Requirements>(() => ProdRequirements(),
-      registerFor: {_prod});
   gh.lazySingleton<ApiClient>(() => ApiClient(get<Requirements>()));
   gh.lazySingleton<NewsApi>(() => NewsApi(get<ApiClient>()));
   gh.factory<NewsRepository>(() => NewsRepositoryImpl(get<NewsApi>()));
   gh.factory<NewsStore>(() => NewsStore(get<NewsRepository>()));
+
+  // Eager singletons must be registered in the right order
+  gh.singleton<Requirements>(DevRequirements(), registerFor: {_dev});
+  gh.singleton<Requirements>(ProdRequirements(), registerFor: {_prod});
   return get;
 }
