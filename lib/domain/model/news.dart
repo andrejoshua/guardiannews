@@ -1,12 +1,19 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 
-class News {
-  final String headline;
-  final String section;
-  final String url;
-  final DateTime publicationDate;
+part 'news.freezed.dart';
 
-  News(this.headline, this.section, this.url, this.publicationDate);
+@immutable
+@freezed
+class News with _$News {
+  const factory News(
+    String headline,
+    String section,
+    String url,
+    DateTime publicationDate,
+  ) = _News;
+
+  const News._();
 
   String get publicationDateString =>
       new DateFormat.yMMMd().format(publicationDate);

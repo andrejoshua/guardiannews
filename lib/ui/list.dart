@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:guardiannews/di/di.dart';
 import 'package:guardiannews/domain/model/news.dart';
+import 'package:guardiannews/route/app_router.gr.dart';
 import 'package:guardiannews/store/news.dart';
-import 'package:guardiannews/ui/routes.gr.dart';
 
+@RoutePage()
 class NewsListPage extends StatefulWidget {
   @override
   _NewsListPageState createState() => _NewsListPageState();
@@ -30,7 +31,7 @@ class _NewsListPageState extends State<NewsListPage> {
         child: Observer(
           builder: (_) => ListView.separated(
             itemBuilder: (context, index) => NewsListItem(
-              item: cities[index],
+              cities[index],
             ),
             itemCount: cities.length,
             separatorBuilder: (context, index) => Divider(
@@ -45,18 +46,15 @@ class _NewsListPageState extends State<NewsListPage> {
 }
 
 class NewsListItem extends StatelessWidget {
-  final News item;
+  const NewsListItem(this.item, {Key? key}) : super(key: key);
 
-  const NewsListItem({Key key, this.item}) : super(key: key);
+  final News item;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        ExtendedNavigator.of(context).push(Routes.toNewsDetail,
-            arguments: NewsDetailPageArguments(
-              url: item.url,
-            ));
+        context.router.push(NewsDetailRoute(url: item.url));
       },
       child: Container(
         color: Colors.grey,

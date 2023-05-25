@@ -1,21 +1,22 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
-import 'package:guardiannews/data/req.dart';
-import 'package:injectable/injectable.dart';
+import 'package:guardiannews/di/di.dart';
 
-@LazySingleton()
 class ApiClient {
-  Dio _dio;
-
-  ApiClient(Requirements requirements) {
-    var options = new BaseOptions(
-        receiveTimeout: 3000,
-        connectTimeout: 5000,
-        baseUrl: requirements.getBaseUrl(),
-        queryParameters: {
-          "api-key": "6780087e-75d8-4e95-aed4-4e7b60aa26b2",
-        });
-    _dio = new Dio(options);
+  static ApiClient init() {
+    final dio = getIt<Dio>();
+    return ApiClient._(dio);
   }
 
-  Dio get dio => _dio;
+  final Dio _dio;
+
+  ApiClient._(this._dio);
+
+  Future<Map<String, dynamic>> get(String path,
+      {Map<String, dynamic>? queryParams}) {
+    return _dio
+        .get<String>(path, queryParameters: queryParams)
+        .then((value) => jsonDecode(value.data!) as Map<String, dynamic>);
+  }
 }

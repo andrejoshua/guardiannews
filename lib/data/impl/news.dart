@@ -11,7 +11,7 @@ class NewsRepositoryImpl implements NewsRepository {
   NewsRepositoryImpl(this._api);
 
   @override
-  Future<List<News>> getNews({int page = 1, int offset = 20}) async {
+  Future<List<News>> getNews({int page = 1, int offset = 20}) {
     return _api.getNews(page: page, offset: offset).then((value) => value.data
         .map((e) => News(e.webTitle, e.sectionName, e.webUrl,
             new DateFormat("yyyy-MM-ddTHH:mm:ssZ").parse(e.webPublicationDate)))

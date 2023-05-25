@@ -6,11 +6,13 @@ part of 'base.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BaseResponse<T> _$BaseResponseFromJson<T>(Map<String, dynamic> json) {
-  return BaseResponse<T>(
-    status: json['status'] as String,
-    totalPages: json['pages'] as int,
-    currentPage: json['currentPage'] as int,
-    data: BaseResponse._dataFromJson(json['results']),
-  );
-}
+_$_BaseResponse<T> _$$_BaseResponseFromJson<T>(
+  Map<String, dynamic> json,
+  T Function(Object? json) fromJsonT,
+) =>
+    _$_BaseResponse<T>(
+      json['status'] as String,
+      json['pages'] as int,
+      json['currentPage'] as int,
+      fromJsonT(json['results']),
+    );

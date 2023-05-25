@@ -4,36 +4,53 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
-import 'package:get_it/get_it.dart';
-import 'package:injectable/injectable.dart';
+// ignore_for_file: unnecessary_lambdas
+// ignore_for_file: lines_longer_than_80_chars
+// coverage:ignore-file
 
-import '../data/client.dart';
-import '../data/api/news.dart';
-import '../domain/repo/news.dart';
-import '../data/impl/news.dart';
-import '../store/news.dart';
-import '../data/req.dart';
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:dio/dio.dart' as _i8;
+import 'package:get_it/get_it.dart' as _i1;
+import 'package:injectable/injectable.dart' as _i2;
 
-/// Environment names
-const _dev = 'dev';
-const _prod = 'prod';
+import '../data/api/news.dart' as _i3;
+import '../data/impl/news.dart' as _i5;
+import '../data/module.dart' as _i9;
+import '../data/req.dart' as _i7;
+import '../domain/repo/news.dart' as _i4;
+import '../store/news.dart' as _i6;
 
-/// adds generated dependencies
-/// to the provided [GetIt] instance
+const String _dev = 'dev';
+const String _prod = 'prod';
 
-GetIt $initGetIt(
-  GetIt get, {
-  String environment,
-  EnvironmentFilter environmentFilter,
+// ignore_for_file: unnecessary_lambdas
+// ignore_for_file: lines_longer_than_80_chars
+// initializes the registration of main-scope dependencies inside of GetIt
+_i1.GetIt $initGetIt(
+  _i1.GetIt getIt, {
+  String? environment,
+  _i2.EnvironmentFilter? environmentFilter,
 }) {
-  final gh = GetItHelper(get, environment, environmentFilter);
-  gh.lazySingleton<ApiClient>(() => ApiClient(get<Requirements>()));
-  gh.lazySingleton<NewsApi>(() => NewsApi(get<ApiClient>()));
-  gh.factory<NewsRepository>(() => NewsRepositoryImpl(get<NewsApi>()));
-  gh.factory<NewsStore>(() => NewsStore(get<NewsRepository>()));
-
-  // Eager singletons must be registered in the right order
-  gh.singleton<Requirements>(DevRequirements(), registerFor: {_dev});
-  gh.singleton<Requirements>(ProdRequirements(), registerFor: {_prod});
-  return get;
+  final gh = _i2.GetItHelper(
+    getIt,
+    environment,
+    environmentFilter,
+  );
+  final dataPreModule = _$DataPreModule();
+  gh.factory<_i3.NewsApi>(() => _i3.NewsApi());
+  gh.factory<_i4.NewsRepository>(
+      () => _i5.NewsRepositoryImpl(gh<_i3.NewsApi>()));
+  gh.factory<_i6.NewsStore>(() => _i6.NewsStore(gh<_i4.NewsRepository>()));
+  gh.singleton<_i7.Requirements>(
+    _i7.DevRequirements(),
+    registerFor: {_dev},
+  );
+  gh.singleton<_i7.Requirements>(
+    _i7.ProdRequirements(),
+    registerFor: {_prod},
+  );
+  gh.factory<_i8.Dio>(() => dataPreModule.getDio(gh<_i7.Requirements>()));
+  return getIt;
 }
+
+class _$DataPreModule extends _i9.DataPreModule {}
