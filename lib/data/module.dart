@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 abstract class DataPreModule {
   @injectable
   Dio getDio(Requirements requirements) {
-    var options = new BaseOptions(
+    final options = new BaseOptions(
       baseUrl: requirements.getBaseUrl(),
       contentType: "application/json; charset=utf-8",
       validateStatus: (status) =>
