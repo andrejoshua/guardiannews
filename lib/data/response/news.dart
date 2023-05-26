@@ -1,25 +1,23 @@
-import 'package:guardiannews/data/response/newsitem.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'news.freezed.dart';
 
 part 'news.g.dart';
 
-@JsonSerializable(createToJson: false)
-class NewsResponse {
-  @JsonKey(name: "status")
-  final String status;
-  @JsonKey(name: "pages")
-  final int totalPages;
-  @JsonKey(name: "currentPage")
-  final int currentPage;
-  @JsonKey(name: "results")
-  final List<NewsItemResponse> data;
+@immutable
+@Freezed(
+  toJson: false
+)
+class NewsResponse with _$NewsResponse {
+  const factory NewsResponse(
+    @JsonKey(name: "id") String id,
+    @JsonKey(name: "sectionName") String sectionName,
+    @JsonKey(name: "webPublicationDate") String webPublicationDate,
+    @JsonKey(name: "webTitle") String webTitle,
+    @JsonKey(name: "webUrl") String webUrl,
+  ) = _NewsResponse;
 
-  NewsResponse({
-    this.status,
-    this.totalPages,
-    this.currentPage,
-    this.data,
-  });
+  const NewsResponse._();
 
   factory NewsResponse.fromJson(Map<String, dynamic> json) =>
       _$NewsResponseFromJson(json);
