@@ -1,0 +1,33 @@
+name: ⭐ Feature request
+description: Suggest a feature to improve Guardian News app
+labels: [Feature request]
+body:
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Describe your suggested feature
+      description: How can Guardian News be improved?
+      placeholder: |
+        Example:
+          "It should work like this..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: other-details
+    attributes:
+      label: Other details
+      placeholder: |
+        Additional details and attachments.
+
+  - type: checkboxes
+    id: guidelines
+    attributes:
+      label: Guidelines
+      description: Read this carefully, we will close and ignore your issue if you skimmed through this.
+      options:
+        - label: Before pushing your PR to the repository, make sure that it builds perfectly fine on your local system.
+          required: true
+        - label: Add enough information, like a meaningful title, the reason why you made the commit and a link to the issue page if you opened one for this PR.
+          required: true
