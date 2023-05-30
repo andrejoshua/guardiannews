@@ -99,7 +99,9 @@ void main() {
       getIt.registerFactory<Dio>(() => dio);
     });
 
-    test('When requesting API with page 1 and offset 20, return status ok, list of results with more than one item, and first title should contain word `war`', () async {
+    test(
+        'When requesting API with page 1 and offset 20, return status ok, list of results with more than one item, and first title should contain word `war`',
+        () async {
       final api = NewsApi();
       final result = await api.getNews(page: 1, offset: 20);
 
