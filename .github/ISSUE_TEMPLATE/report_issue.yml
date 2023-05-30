@@ -1,0 +1,78 @@
+name: 🐞 Issue report
+description: Report an issue in Guardian News app
+labels: [Bug]
+body:
+
+  - type: textarea
+    id: reproduce-steps
+    attributes:
+      label: Steps to reproduce
+      description: Provide an example of the issue.
+      placeholder: |
+        Example:
+          1. First step
+          2. Second step
+          3. Issue here
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: Explain what you should expect to happen.
+      placeholder: |
+        Example:
+          "This should happen..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: crash-logs
+    attributes:
+      label: Crash logs
+      description: |
+        If you're experiencing crashes, share the crash logs from **More → Settings → Advanced** then press **Dump crash logs**.
+      placeholder: |
+        You can paste the crash logs in plain text or upload it as an attachment.
+
+  - type: input
+    id: guardiannews-version
+    attributes:
+      label: Guardian News version
+      description: You can find your Guarian News app version in **More → About**.
+      placeholder: |
+        Example: "1.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: device-os-version
+    attributes:
+      label: Device OS version
+      description: Your Android or iOS OS version
+      placeholder: |
+        Example: "Android 11"
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: Device
+      description: List your device and model.
+      placeholder: |
+        Example: "Google Pixel 5"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: guidelines
+    attributes:
+      label: Guidelines
+      description: Read this carefully, we will close and ignore your issue if you skimmed through this.
+      options:
+        - label: Before pushing your PR to the repository, make sure that it builds perfectly fine on your local system.
+          required: true
+        - label: Add enough information, like a meaningful title, the reason why you made the commit and a link to the issue page if you opened one for this PR.
+          required: true
