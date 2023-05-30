@@ -5,9 +5,7 @@ part 'news.freezed.dart';
 part 'news.g.dart';
 
 @immutable
-@Freezed(
-  toJson: false
-)
+@Freezed(toJson: false)
 class NewsResponse with _$NewsResponse {
   const factory NewsResponse(
     @JsonKey(name: "id") String id,

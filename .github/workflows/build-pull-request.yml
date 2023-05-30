@@ -10,30 +10,34 @@ on:
     paths-ignore:
       - '**.md'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
+    name: Code check
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      # Checkout pull request branch
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # Note: This workflow uses the latest stable version of the Dart SDK.
-      # You can specify other versions if desired, see documentation here:
-      # https://github.com/dart-lang/setup-dart/blob/main/README.md
-      # - uses: dart-lang/setup-dart@v1
-      - uses: subosito/flutter-action@v2
+      # Note: This workflow uses the latest stable version of the Flutter SDK.
+      # No need to install Dart SDK separately.
+      - name: Install Flutter v3.10.2
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.10.2"
           channel: 'stable'
           cache: true
 
+      # Once Flutter is installed, run pub get to fetch the app's dependencies.
       - name: Install dependencies
         run: flutter pub get
 
-      # Uncomment this step to verify the use of 'dart format' on each commit.
-      # - name: Verify formatting
-      #   run: dart format --output=none --set-exit-if-changed .
-
+      # Lint checks for every pull request
       # Consider passing '--fatal-infos' for slightly stricter analysis.
       - name: Analyze project source
         run: flutter analyze
