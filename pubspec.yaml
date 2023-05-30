@@ -67,6 +67,9 @@ dev_dependencies:
   # Generator for freezed
   freezed_annotation: ^2.2.0
 
+  # Mock Dio HTTP client
+  http_mock_adapter: ^0.4.4
+
   # Generator for injectable
   injectable_generator: ^2.1.5
 
@@ -75,6 +78,9 @@ dev_dependencies:
 
   # Generator for mobx
   mobx_codegen: ^2.3.0
+
+  # Mockito to mock object
+  mockito: ^5.4.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
