@@ -64,12 +64,36 @@ jobs:
 
       # Builds apk
       - name: Build apk
-        run: flutter build apk --release
+        run: flutter build apk --release --flavor prod
 
       # Upload apk to release
       - name: Upload apk
         uses: actions/upload-artifact@v1
         with:
           name: v${{ github.ref_name }}.apk
-          path: build/app/outputs/flutter-apk/v${{ github.ref_name }}.apk
+          path: build/app/outputs/apk/prod/release/v${{ github.ref_name }}.apk
           overwrite: true
+
+      # This creates a new release that will be put under tag assets
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: v${{ github.ref_name }}
+          draft: true
+          prerelease: true
+
+      # This will upload a release asset to the newly-created release
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: build/app/outputs/apk/prod/release/v${{ github.ref_name }}.apk
+          asset_name: v${{ github.ref_name }}.apk
+          asset_content_type: application/zip
